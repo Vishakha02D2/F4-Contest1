@@ -1,21 +1,27 @@
+import React, { useState } from "react";
 
-import './App.css';
-import { useState } from 'react';
-
-function App() {
+const Form=()=>{
   let [name,setName]=useState("");
   let [email,setEmail] = useState("");
   let [password,setPassword] = useState("");
   let [confirmPassword,setConfirmPassword] = useState("");
   let [error,setError] = useState("");
   let [success,setSuccess] = useState("");
+  function isValidEmail(email) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  }
 
   let validation=()=>{
     if(name===""||email===""||password===""||confirmPassword===""){
       setError("Error : All the fields are mandatory");
       return;
     }
-    else if(password!==confirmPassword){
+    else if(!isValidEmail(email.trim())) {
+      setError("Please enter a valid email");
+      return;
+    }
+    else if(password.trim()!==confirmPassword.trim()){
       setError("Password doesn't match!");
       return;
     }
@@ -26,7 +32,7 @@ function App() {
     console.log("Successfully Signed Up!");
     setTimeout(function() {
       window.location.reload();
-    }, 1000);
+    }, 2000);
   }
   return(
     <div className="signup-form">
@@ -42,6 +48,5 @@ function App() {
     <button onClick={validation}>Signup</button>
   </div>
   );
-}
-
-export default App;
+};
+export default Form;
